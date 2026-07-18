@@ -1,0 +1,19 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "de.derniklaas.mccislandtooltips.mixins",
+  "compatibilityLevel": "JAVA_25",
+  "mixins": [
+  ],
+  "client": [
+    "AbstractContainerScreenMixin",
+    "BitmapFontDefinitionMixin",
+    "GuiGraphicsExtractorMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "overwrites": {
+    "requireAnnotations": true
+  }
+}

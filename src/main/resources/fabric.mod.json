@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "id": "mccislandtooltips",
+  "version": "${version}",
+  "name": "MCC Island Tooltips",
+  "description": "Automatically applies custom item rarity tooltips while playing on MCC Island",
+  "authors": [
+    "derNiklaas"
+  ],
+  "contact": {
+    "sources": "https://github.com/derNiklaas/MCC-Island-Tooltips"
+  },
+  "license": "MIT",
+  "icon": "assets/mccislandtooltips/icon.png",
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "de.derniklaas.mccislandtooltips.client.MCCIslandTooltipsClient"
+    ]
+  },
+  "mixins": [
+    "mccislandtooltips.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric-api": "*",
+    "minecraft": "${minecraft_version}"
+  }
+}
