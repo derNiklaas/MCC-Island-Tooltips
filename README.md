@@ -20,7 +20,7 @@ Items without a rarity get a subtle MCC-flavored default border, so every toolti
 
 ## Installation
 
-1. Install the [Fabric Loader](https://fabricmc.net/use/) for Minecraft 26.1.2.
+1. Install the [Fabric Loader](https://fabricmc.net/use/) for Minecraft 26.1.2 or 26.2.
 2. Drop the [Fabric API](https://modrinth.com/mod/fabric-api) and this mod's jar into your `mods` folder.
 3. Join MCC Island and hover over something shiny.
 
