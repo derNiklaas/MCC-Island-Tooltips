@@ -69,7 +69,9 @@ jobs:
 
           # ---- metadata (loaders/deps auto-read from fabric.mod.json) ----
           loaders: fabric
-          game-versions: "['26.1.2', '26.2']"
+          game-versions: |
+            26.1.2
+            26.2
           java: 25
 
           # ---- modrinth ----
