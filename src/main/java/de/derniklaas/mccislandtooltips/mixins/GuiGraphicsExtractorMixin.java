@@ -1,30 +1,39 @@
 package de.derniklaas.mccislandtooltips.mixins;
 
-import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
-import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
+import com.llamalad7.mixinextras.sugar.Local;
 import de.derniklaas.mccislandtooltips.client.TooltipStyles;
+import java.util.ArrayList;
+import java.util.List;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
-import net.minecraft.core.component.DataComponentType;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
+import net.minecraft.resources.Identifier;
+import net.minecraft.util.FormattedCharSequence;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.ModifyVariable;
 
 @Mixin(GuiGraphicsExtractor.class)
 public class GuiGraphicsExtractorMixin {
 
     /**
-     * Covers item tooltips outside container screens, most notably items hovered in chat,
-     * which go through {@code setTooltipForNextFrame(Font, ItemStack, int, int)}.
+     * Every tooltip overload ends up here, so this is the one place that sees a tooltip nobody
+     * gave a style to. The lines are already laid out at this point, so the style glyphs are read
+     * back out of them.
      */
-    @WrapOperation(
-            method = "setTooltipForNextFrame(Lnet/minecraft/client/gui/Font;Lnet/minecraft/world/item/ItemStack;II)V",
-            at = @At(
-                    value = "INVOKE",
-                    target = "Lnet/minecraft/world/item/ItemStack;get(Lnet/minecraft/core/component/DataComponentType;)Ljava/lang/Object;"
-            )
-    )
-    private Object mccislandtooltips$applyTooltipStyle(ItemStack stack, DataComponentType<?> type, Operation<Object> original) {
-        Object style = original.call(stack, type);
-        return style != null ? style : TooltipStyles.styleFor(stack);
+    @ModifyVariable(method = "setTooltipForNextFrameInternal", at = @At("HEAD"), argsOnly = true)
+    private Identifier mccislandtooltips$applyMissingTooltipStyle(
+            Identifier style,
+            @Local(argsOnly = true) List<ClientTooltipComponent> lines
+    ) {
+        if (style != null) {
+            return style;
+        }
+        List<FormattedCharSequence> text = new ArrayList<>(lines.size());
+        for (ClientTooltipComponent line : lines) {
+            if (line instanceof ClientTextTooltipAccessor accessor) {
+                text.add(accessor.mccislandtooltips$getText());
+            }
+        }
+        return TooltipStyles.styleFor(text);
     }
 }

@@ -1,14 +1,12 @@
 package de.derniklaas.mccislandtooltips.client;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
-import net.minecraft.core.component.DataComponents;
-import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.component.ItemLore;
+import net.minecraft.util.FormattedCharSequence;
 
 public final class TooltipStyles {
 
@@ -57,49 +55,30 @@ public final class TooltipStyles {
     }
 
     /**
-     * The tooltip style to use for this stack, or {@code null} to leave the tooltip untouched.
-     * Only applies while connected to MCC Island and never overrides a style set by the server.
+     * The tooltip style for a tooltip that carries no style of its own, from the text it renders:
+     * {@code show_text} hover events, widget tooltips and tooltips a mod renders itself.
+     * {@code null} leaves the tooltip untouched.
      */
-    public static Identifier styleFor(ItemStack stack) {
-        if (!MCCIslandTooltipsClient.isOnMCCIsland() || stack.has(DataComponents.TOOLTIP_STYLE)) {
+    public static Identifier styleFor(List<? extends FormattedCharSequence> lines) {
+        if (!MCCIslandTooltipsClient.isOnMCCIsland()) {
             return null;
         }
-        String name = detectStyle(stack);
-        return name != null ? style(name) : DEFAULT_STYLE;
-    }
-
-    private static String detectStyle(ItemStack stack) {
         Set<String> found = new HashSet<>();
-        collectStyles(stack.getHoverName().getString(), found);
-        ItemLore lore = stack.get(DataComponents.LORE);
-        if (lore != null) {
-            for (Component line : lore.lines()) {
-                collectStyles(line.getString(), found);
-            }
-        }
-        if (found.isEmpty()) {
-            return null;
+        for (FormattedCharSequence line : lines) {
+            line.accept((_, _, codepoint) -> {
+                String name = STYLE_GLYPHS.get(codepoint);
+                if (name != null) {
+                    found.add(name);
+                }
+                return true;
+            });
         }
         for (String name : STYLE_PRIORITY) {
             if (found.contains(name)) {
-                return name;
+                return style(name);
             }
         }
-        return null;
-    }
-
-    private static void collectStyles(String line, Set<String> found) {
-        if (STYLE_GLYPHS.isEmpty()) {
-            return;
-        }
-        for (int i = 0; i < line.length(); ) {
-            int codepoint = line.codePointAt(i);
-            String name = STYLE_GLYPHS.get(codepoint);
-            if (name != null) {
-                found.add(name);
-            }
-            i += Character.charCount(codepoint);
-        }
+        return DEFAULT_STYLE;
     }
 
     private static Identifier style(String name) {
