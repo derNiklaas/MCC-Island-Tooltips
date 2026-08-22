@@ -3,6 +3,8 @@
 A client-side Fabric mod that gives items on [MCC Island](https://mccisland.net) fancy tooltip borders matching their
 rarity.
 
+This branch targets Minecraft 1.21.11. The `master` branch targets 26.1.2 and newer.
+
 ## What it does
 
 While you are connected to MCC Island, the mod looks at each item's lore for the rarity icons the server puts there and
@@ -20,14 +22,14 @@ Items without a rarity get a subtle MCC-flavored default border, so every toolti
 
 ## Installation
 
-1. Install the [Fabric Loader](https://fabricmc.net/use/) for Minecraft 26.1.2 or 26.2.
+1. Install the [Fabric Loader](https://fabricmc.net/use/) for Minecraft 1.21.11.
 2. Drop the [Fabric API](https://modrinth.com/mod/fabric-api) and this mod's jar into your `mods` folder.
 3. Join MCC Island and hover over something shiny.
 
 ## Building from source
 
 The repository does not ship Gradle wrapper scripts; use a local Gradle installation matching
-`gradle/wrapper/gradle-wrapper.properties` with Java 25:
+`gradle/wrapper/gradle-wrapper.properties` with Java 21:
 
 ```
 gradle build

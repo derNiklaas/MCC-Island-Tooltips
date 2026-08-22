@@ -2,13 +2,13 @@
   "required": true,
   "minVersion": "0.8",
   "package": "de.derniklaas.mccislandtooltips.mixins",
-  "compatibilityLevel": "JAVA_25",
+  "compatibilityLevel": "JAVA_21",
   "mixins": [
   ],
   "client": [
     "BitmapFontDefinitionMixin",
     "ClientTextTooltipAccessor",
-    "GuiGraphicsExtractorMixin"
+    "GuiGraphicsMixin"
   ],
   "injectors": {
     "defaultRequire": 1

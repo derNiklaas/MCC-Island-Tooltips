@@ -65,7 +65,7 @@ public final class TooltipStyles {
         }
         Set<String> found = new HashSet<>();
         for (FormattedCharSequence line : lines) {
-            line.accept((_, _, codepoint) -> {
+            line.accept((index, textStyle, codepoint) -> {
                 String name = STYLE_GLYPHS.get(codepoint);
                 if (name != null) {
                     found.add(name);

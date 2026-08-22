@@ -11,11 +11,11 @@ public class MCCIslandTooltipsClient implements ClientModInitializer {
 
     @Override
     public void onInitializeClient() {
-        ClientPlayConnectionEvents.JOIN.register((_, _, client) -> {
+        ClientPlayConnectionEvents.JOIN.register((handler, sender, client) -> {
             ServerData server = client.getCurrentServer();
             onMCCIsland = server != null && isMCCIslandAddress(server.ip);
         });
-        ClientPlayConnectionEvents.DISCONNECT.register((_, _) -> onMCCIsland = false);
+        ClientPlayConnectionEvents.DISCONNECT.register((handler, client) -> onMCCIsland = false);
     }
 
     public static boolean isOnMCCIsland() {

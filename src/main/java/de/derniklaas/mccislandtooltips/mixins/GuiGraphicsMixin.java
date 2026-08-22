@@ -4,7 +4,7 @@ import com.llamalad7.mixinextras.sugar.Local;
 import de.derniklaas.mccislandtooltips.client.TooltipStyles;
 import java.util.ArrayList;
 import java.util.List;
-import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.FormattedCharSequence;
@@ -12,8 +12,8 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 
-@Mixin(GuiGraphicsExtractor.class)
-public class GuiGraphicsExtractorMixin {
+@Mixin(GuiGraphics.class)
+public class GuiGraphicsMixin {
 
     /**
      * Every tooltip overload ends up here, so this is the one place that sees a tooltip nobody
