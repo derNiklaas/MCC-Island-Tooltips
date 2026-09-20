@@ -16,11 +16,11 @@ import org.spongepowered.asm.mixin.injection.ModifyVariable;
 public class GuiGraphicsExtractorMixin {
 
     /**
-     * Every tooltip overload ends up here, so this is the one place that sees a tooltip nobody
+     * Every tooltip is drawn through here, so this is the one place that sees a tooltip nobody
      * gave a style to. The lines are already laid out at this point, so the style glyphs are read
      * back out of them.
      */
-    @ModifyVariable(method = "setTooltipForNextFrameInternal", at = @At("HEAD"), argsOnly = true)
+    @ModifyVariable(method = "tooltip", at = @At("HEAD"), argsOnly = true)
     private Identifier mccislandtooltips$applyMissingTooltipStyle(
             Identifier style,
             @Local(argsOnly = true) List<ClientTooltipComponent> lines
